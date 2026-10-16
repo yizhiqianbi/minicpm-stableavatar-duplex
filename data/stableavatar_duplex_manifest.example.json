@@ -1,0 +1,27 @@
+{
+  "schema_version": "stableavatar-duplex/v1",
+  "description": "Sidecar manifest for the StableAvatar official directory lists.",
+  "target_role": "avatar",
+  "identity_image": "identity/subject_01.png",
+  "clips": [
+    {
+      "clip_id": "session_0001_turn_0003",
+      "variant": "rec",
+      "category": "speech",
+      "clip_dir": "talking_face_data/rec/speech/00001",
+      "video": "talking_face_data/rec/speech/00001/sub_clip.mp4",
+      "target_audio": "talking_face_data/rec/speech/00001/audio.wav",
+      "fps": 25,
+      "start_sec": 12.0,
+      "duration_sec": 3.24,
+      "events": [
+        {"start_sec": 0.0, "end_sec": 0.42, "role": "user", "kind": "speech"},
+        {"start_sec": 0.42, "end_sec": 1.05, "role": "target", "kind": "backchannel"},
+        {"start_sec": 1.05, "end_sec": 3.24, "role": "target", "kind": "speech"}
+      ],
+      "user_audio": "duplex_audio/session_0001_user_0003.wav",
+      "state_labels": ["listen", "backchannel", "speak"],
+      "prompt": "A calm digital human listens, briefly acknowledges the user, then answers naturally."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Baseline dependencies for the external StableAvatar checkout. The upstream
+# repository may pin a different CUDA-compatible torch/diffusers combination.
+torch>=2.4
+torchvision>=0.19
+torchaudio>=2.4
+diffusers>=0.30
+transformers>=4.45
+accelerate>=1.0
+librosa>=0.10
+omegaconf>=2.3
+einops>=0.8

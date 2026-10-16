@@ -1,0 +1,4 @@
+# Optional MiniCPM-o local/remote brain dependencies.
+torch>=2.4
+transformers>=4.50
+websockets>=12.0

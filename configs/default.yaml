@@ -1,0 +1,51 @@
+server:
+  host: 0.0.0.0
+  port: 8000
+  artifacts_dir: artifacts
+
+brain:
+  name: mock
+  model_id: openbmb/MiniCPM-o-4_5
+  model_path: null
+  endpoint: null
+  remote_mode: audio
+  prompt: "You are a warm, concise digital human. Answer the user naturally."
+  output_sample_rate: 24000
+
+stream:
+  fps: 25
+  num_frames: 81
+  block_ms: 1000
+  max_buffer_ms: 6000
+  input_sample_rate: 16000
+  input_channels: 1
+  output_sample_rate: 24000
+  max_inflight_blocks: 1
+
+avatar:
+  name: mock
+  prompt: "A friendly digital human answers naturally with subtle head motion."
+  height: 480
+  width: 832
+  num_inference_steps: 30
+  cfg_scale: 1.0
+  seed: 42
+  model_id: Wan2.1-Fun-V1.1-1.3B-InP
+  variant: rec_vec
+  stableavatar_root: stableavatar
+  stableavatar_python: python
+  stableavatar_inference_script: inference.py
+  stableavatar_config_path: deepspeed_config/wan2.1/wan_civitai.yaml
+  stableavatar_pretrained_model_path: checkpoints/Wan2.1-Fun-V1.1-1.3B-InP
+  stableavatar_transformer_path: checkpoints/StableAvatar-1.3B/transformer3d-rec-vec.pt
+  stableavatar_wav2vec_path: checkpoints/wav2vec2-base-960h
+  stableavatar_gpu_memory_mode: model_cpu_offload
+  stableavatar_sample_steps: 30
+  stableavatar_overlap_window_length: 5
+  stableavatar_clip_sample_n_frames: 81
+  stableavatar_motion_frame: 25
+  stableavatar_text_guide_scale: 3.0
+  stableavatar_audio_guide_scale: 5.0
+  stableavatar_ulysses_degree: 1
+  stableavatar_ring_degree: 1
+  stableavatar_cuda_visible_devices: null

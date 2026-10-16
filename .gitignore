@@ -1,0 +1,15 @@
+__pycache__/
+*.egg-info/
+*.py[cod]
+.pytest_cache/
+.venv/
+artifacts/*
+models/*
+data/raw/*
+data/cache/*
+*.safetensors
+*.ckpt
+*.pt
+*.mp4
+*.wav
+*.flac

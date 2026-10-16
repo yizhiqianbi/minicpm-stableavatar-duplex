@@ -1,0 +1,11 @@
+# Install a CUDA-matched PyTorch/torchaudio build first.
+torch>=2.4
+torchaudio>=2.4
+transformers>=4.50
+accelerate>=1.0
+safetensors>=0.4
+modelscope>=1.20
+huggingface_hub>=0.26
+# DiffSynth-Studio is intentionally kept as a git dependency so its H3 API
+# stays explicit and can be pinned to a known commit in your experiment log.
+git+https://github.com/modelscope/DiffSynth-Studio.git
