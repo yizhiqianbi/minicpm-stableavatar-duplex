@@ -75,7 +75,14 @@ bash scripts/train_stableavatar_lora.sh
 TRANSFORMER_PATH=/data/StableAvatar/checkpoints/StableAvatar-1.3B/transformer3d-rec-vec.pt
 ```
 
-这样是在 StableAvatar 权重上做 LoRA finetune；如果不指定，则是在 Wan2.1-1.3B 上训练 adapter。当前包装器只对 rec/vec 提供 LoRA 入口；square 数据需要按上游 full trainer 单独处理。
+这样才是在 StableAvatar 权重上做 LoRA finetune；如果不指定，则是在 Wan2.1-1.3B 上训练 adapter。正式实验建议显式设置 `TRANSFORMER_PATH`，避免把 Wan2.1 adapter 误当成 StableAvatar finetune。
+
+需要注意当前仓库的一个加载边界：官方 `inference.py` 主要接收完整 `--transformer_path`，而 LoRA trainer 保存的 `lora-checkpoint-*.pt` 不能直接作为推理 transformer 使用。训练完成后还需要二选一：
+
+1. 在推理端创建与 trainer 相同的 LoRA 网络，加载 LoRA state，再 merge/unload 后导出完整 transformer；
+2. 给 StableAvatar 推理脚本增加 LoRA 加载参数，并在 adapter 中显式加载 LoRA。
+
+当前 `StableAvatarBackend` 还没有自动 merge LoRA 的逻辑，因此训练输出不能直接填入 `stableavatar_transformer_path`。当前包装器只对 rec/vec 提供 LoRA 入口；square 数据需要按上游 full trainer 单独处理。
 
 建议实验顺序：
 
@@ -90,6 +97,8 @@ rank=32，2,000 steps
 ## 二、MiniCPM-o 训练
 
 当前仓库里的 MiniCPM-o 模块是推理适配器，支持 mock、Realtime WebSocket 和本地 MiniCPMODuplex；它还不是完整的 MiniCPM-o 训练器。MiniCPM-o 的全双工流程按音频 chunk 工作，并输出 listen/speak 决策、文本和目标音频。[Duplex 文档](https://github.com/OpenBMB/MiniCPM-o-Demo/blob/main/docs/en/architecture/duplex.md)
+
+MiniCPM-o 4.5 的普通视觉/文本 LoRA 路径和 Omni 全双工路径不能直接等同。当前更稳妥的研究做法是：先冻结 Omni 模型和 TTS，只训练一个外部 duplex policy/state head；如果要改语言行为，再用与具体 checkpoint 兼容的文本/视觉 LoRA。官方文档列出了 LLaMA-Factory 和 SWIFT 等训练框架，但需要逐项确认连续音频、speech output、TDM/KV streaming 是否被目标 checkpoint 的训练代码支持。[MiniCPM-o 4.5 文档](https://github.com/OpenBMB/MiniCPM-V/blob/main/docs/minicpm_o4dot5_en.md)
 
 训练数据应保留时间结构：
 
